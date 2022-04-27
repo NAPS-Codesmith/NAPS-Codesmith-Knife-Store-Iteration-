@@ -5,16 +5,16 @@ const customerController = {};
 customerController.createCustomer = (req, res, next) => {
   const { user, password } = req.body;
   let isAdmin = false
-  
+
   db.query('INSERT INTO customer VALUES (DEFAULT, $1, $2, $3) RETURNING *', [user, password, isAdmin])
     .then((data) => {
-      res.locals.addedCustomer = data.rows; 
+      res.locals.addedCustomer = data.rows[0];
       return next();
     })
-    .catch((err) => 
+    .catch((err) =>
       next({
         log: 'customerController.createCustomer',
-        message: {err: err}
+        message: { err: err }
       })
     );
 };
@@ -22,32 +22,32 @@ customerController.createCustomer = (req, res, next) => {
 customerController.deleteCustomer = (req, res, next) => {
   const { id } = req.params;
   db.query('DELETE FROM customer WHERE id = $1 RETURNING *', [id])
-  .then((data) => {
-    res.locals.deletedCustomer = data.rows; 
-    return next();
-  })
-  .catch((err) => 
-    next({
-      log: 'customerController.deleteCustomer',
-      message: {err: err}
+    .then((data) => {
+      res.locals.deletedCustomer = data.rows;
+      return next();
     })
-  );
+    .catch((err) =>
+      next({
+        log: 'customerController.deleteCustomer',
+        message: { err: err }
+      })
+    );
 }
 
 customerController.updateCustomer = (req, res, next) => {
   const { username } = req.params;
   const { isAdmin } = req.body;
   db.query('UPDATE customer SET password = $1 WHERE username = $2 RETURNING *', [isAdmin, username])
-  .then(data => {
-    res.locals.updatedCustomer = data.rows;
-    return next();
-  })
-  .catch((err) => 
-  next({
-    log: 'customerController.updateCustomer',
-    message: {err: err}
-  })
-);
+    .then(data => {
+      res.locals.updatedCustomer = data.rows;
+      return next();
+    })
+    .catch((err) =>
+      next({
+        log: 'customerController.updateCustomer',
+        message: { err: err }
+      })
+    );
 };
 
 customerController.getCustomer = (req, res, next) => {
@@ -58,10 +58,10 @@ customerController.getCustomer = (req, res, next) => {
       res.locals.customer = data.rows;
       return next();
     })
-    .catch((err) => 
+    .catch((err) =>
       next({
         log: 'customerController.getCustomer',
-        message: {err: err}
+        message: { err: err }
       })
     );
 };
@@ -86,16 +86,16 @@ customerController.login = (req, res, next) => {
         message: 'You are logged in',
         isAdmin: false
       }
-      if (data.rows[0].isAdmin === 'true'){
+      if (data.rows[0].isAdmin === 'true') {
         res.locals.authentication.isAdmin = true;
       }
       console.log(data.rows)
       return next();
     })
-    .catch((err) => 
+    .catch((err) =>
       next({
         log: 'customerController.getCustomer',
-        message: {err: err}
+        message: { err: err }
       })
     );
 };
