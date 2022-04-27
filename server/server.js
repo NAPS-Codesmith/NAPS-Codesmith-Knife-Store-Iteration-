@@ -1,10 +1,14 @@
 // import and require all controllers, port initialization, paths, and app(express)
 const path = require('path');
 const express = require('express');
-const PORT = 3000;
+const cartRouter = require('./routes/cartRoute');
+const knifeRouter = require('./routes/knifeRoute');
+const customerRouter = require('./routes/customerRoute');
 const customerController = require('./controllers/customerController');
 const knifeController = require('./controllers/knifeController');
 const cartController = require('./controllers/CartController');
+const PORT = 3000;
+
 // invoke express
 const app = express();
 
@@ -22,52 +26,9 @@ app.use(express.urlencoded({ extended: true }));
 //   res.status(200).json({isLogged=In: true})
 // })
 // handles routing
-const appRouter = express.Router();
-app.use('/knives', appRouter);
-app.use('/customers', appRouter);
-app.use('/cart', appRouter);
-
-appRouter.post('/cart/addToCart', cartController.addToCart, (req, res) => {
-  console.log('res.locals.added: ', res.locals.addedItem) 
-  return res.status(200).json(res.locals.addedItem)
-}), 
-
-// routers
-appRouter.get('/knives', knifeController.getAllKnives, (req, res) => {
-  return res.status(200).json(res.locals.knives);
-});
-
-appRouter.post('/knives/addKnife', knifeController.createKnife, (req, res) => {
-  return res.status(200).json(res.locals.addedKnife);
-});
-
-appRouter.delete('/knives/:id', knifeController.deleteKnife, (req, res) => {
-  return res.status(200).json(res.locals.deletedKnife);
-});
-
-appRouter.put('/knives/:id', knifeController.updateKnife, (req, res) => {
-  return res.status(200).json(res.locals.updatedKnife);
-});
-
-appRouter.get('/customers/:username', customerController.getCustomer, (req, res) => {
-  return res.status(200).json(res.locals.customer);
-});
-//
-appRouter.post('/customers/addCustomer', customerController.createCustomer, customerController.login, (req, res) => {
-  return res.status(200).json(res.locals.authentication);
-});
-//
-appRouter.post('/customers/login', customerController.login, (req, res) => {
-  return res.status(200).json(res.locals.authentication);
-});
-
-appRouter.delete('/customers/:id', customerController.deleteCustomer, (req, res) => {
-  return res.status(200).json(res.locals.deletedCustomer);
-});
-
-appRouter.put('/customers/:id', customerController.updateCustomer, (req, res) => {
-  return res.status(200).json(res.locals.updatedCustomer);
-});
+app.use('/knives', knifeRouter);
+app.use('/customers', customerRouter);
+app.use('/cart', cartRouter);
 
 
 // catch-all router handler for any request to an unknown route

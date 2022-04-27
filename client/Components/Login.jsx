@@ -18,6 +18,9 @@ Modal.setAppElement('#root');
 function Login(props){
   const [modalIsOpen, setIsOpen] = useState(false);
 
+  // Modal refered a lot, dont know what it means
+  //Modal refers to the window that opens when you click the sign in button
+
   function openModal() {
     setIsOpen(true);
   }
@@ -29,6 +32,7 @@ function Login(props){
     setIsOpen(false);
   }
 
+
   useEffect(() => {
     closeModal();
 }, [props.isLoggedIn])
@@ -38,6 +42,9 @@ function Login(props){
     //ADD: if props.isLoggedIn is true call closeModal 
     
     <div>
+      {/* Checking if the user is currently signed in */}
+      {/* If so displayed "Log Out" else "Sign in", very clever and short way of doing this */}
+      {/* I thought it'd be much longer*/}
       <button onClick={openModal} className = 'signInBtn'>{props.isLoggedIn ? 'Log Out' : 'Sign In'}</button> 
       <Modal
         isOpen={modalIsOpen}
@@ -45,7 +52,7 @@ function Login(props){
         style={customStyles}
       >
         
-        
+        {/* OH SHIT, IS THIS HOW SIGN IN/ SIGN UP page howevers over the main page? thats fuckin amazing */}
          <div className = 'inputForm'> 
           <input type='text' placeholder = 'Enter Username' id='usernameInput' />
           <br />

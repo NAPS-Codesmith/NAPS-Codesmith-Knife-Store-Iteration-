@@ -24,4 +24,4 @@ cartController.getCart = (req, res, next) => {
   console.log(req.body)
 }
 
-module.exports = cartController
+module.exports = cartController;
