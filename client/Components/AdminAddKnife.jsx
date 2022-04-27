@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 
 const AdminAddKnife = props => {
+  // checking if the User login is Admin
   if(props.isAdmin) {
     return (
-      <>
+      <> 
+      {/* This is Admin view only page, where they can add item to the page */}
         <div>Add a knife (for admins only)</div>
-        <form method="POST" action='/knives/knives/addKnife'>
+        <form method="POST" action='/knives/addKnife'>
           <input name="name" type="text" placeholder="name"></input>
           <input name="length" type="number" placeholder="length"></input>
           <input name="steel_type" type="text" placeholder="steel type"></input>

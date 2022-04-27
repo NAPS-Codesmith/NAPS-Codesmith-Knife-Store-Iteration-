@@ -10,6 +10,8 @@ function Main() {
   const [isAdmin, setIsAdmin] = useState(false);
   
 function handleClick(e){
+  //three options - addToCart, login, signUp
+
 //{ knife_id, customer_id, quantity} what I'm using for variable names
   if (e.target.className === 'addToCartButton' ){
     //console.log(e.target.id) --> knife-12
@@ -20,7 +22,9 @@ function handleClick(e){
       alert('Please login before adding to cart.');
       return;
     }
-    fetch('/cart/cart/addToCart', {
+    // path gotta be worked on
+    // After we are in the cart path twice, then were are making fetch request?
+    fetch('/cart/addToCart', {
       method: 'POST',
       body: JSON.stringify({
         knife_id,
@@ -31,7 +35,8 @@ function handleClick(e){
     })
     .then(res => res.json())
     .then(data =>
-      consol,e.log('add to cart: ', data),
+      // Not quite necessary
+      console.log('add to cart: ', data),
     )
     .catch(err => console.log('error adding knife:', err));
   
@@ -42,7 +47,7 @@ function handleClick(e){
     const user = document.querySelector('#usernameInput').value;
     const password = document.querySelector('#passwordInput').value;
 
-    fetch(`/customers/customers/login`, {
+    fetch(`/customers/login`, {
       method: 'POST',
       body: JSON.stringify({user, password}),
       headers: { 'Content-Type': 'application/json'}
@@ -71,7 +76,7 @@ function handleClick(e){
   if (e.target.id === 'signUpButton'){
     const user = document.querySelector('#usernameInput').value;
     const password = document.querySelector('#passwordInput').value;
-    fetch(`/customers/customers/addCustomer`, {
+    fetch(`/customers/addCustomer`, {
       method: 'POST',
       body: JSON.stringify({user, password}),
       headers: { 'Content-Type': 'application/json'}

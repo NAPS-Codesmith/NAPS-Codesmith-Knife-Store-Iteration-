@@ -2,7 +2,7 @@
 // create pool allowing use of queries to access db
 const { Pool } = require('pg');
 const PG_URI =
-  'postgres://rrhtblrt:TC75Dx_XjsoqG5tNptnv_Tr9BNZJ3W0f@isilo.db.elephantsql.com/rrhtblrt';
+  'postgres://frlmcury:3DkMpbS9HD9Op-VKVsUKnJicX0qAuVFZ@heffalump.db.elephantsql.com/frlmcury';
 
 // initate new pool
 const pool = new Pool({
