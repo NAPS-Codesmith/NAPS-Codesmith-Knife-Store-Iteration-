@@ -9,12 +9,7 @@ customerController.createCustomer = (req, res, next) => {
 
   db.query('INSERT INTO customer VALUES (DEFAULT, $1, $2, $3) RETURNING *', [user, password, isAdmin])
     .then((data) => {
-<<<<<<< HEAD
-      console.log('data❌❌❌❌❌:', data.rows[0])
-      res.locals.addedCustomer = data.rows[0]; 
-=======
       res.locals.addedCustomer = data.rows[0];
->>>>>>> main
       return next();
     })
     .catch((err) =>

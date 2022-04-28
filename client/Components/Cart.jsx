@@ -38,7 +38,7 @@ const arr = [];
 let totalPrice = 0;
 
   for (let i = 0; i < props.customerCart; i++) {
-    total += customerCart[i].total_price;
+    totalPrice += customerCart[i].total_price;
     arr.push(
       <tr>
         <th>{props.customerCart[i].picture_url}</th>

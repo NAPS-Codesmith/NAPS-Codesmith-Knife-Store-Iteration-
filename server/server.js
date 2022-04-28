@@ -4,9 +4,6 @@ const express = require('express');
 const cartRouter = require('./routes/cartRoute');
 const knifeRouter = require('./routes/knifeRoute');
 const customerRouter = require('./routes/customerRoute');
-const customerController = require('./controllers/customerController');
-const knifeController = require('./controllers/knifeController');
-const cartController = require('./controllers/CartController');
 const PORT = 3000;
 
 // invoke express

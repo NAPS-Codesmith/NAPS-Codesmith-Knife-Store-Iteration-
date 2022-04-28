@@ -19,29 +19,29 @@ function Main() {
   
 function handleClick(e){
   //five options - addToCart, login, signUp, seeMyCart, logOut
-  if (e.target.id === 'signInBtn' && isLoggedIn === true) {
-    setUserID(null);
-    setLoggedIn(false);
-    setUsername(null);
-    setIsAdmin(false);
-    setCustomerCart([]);
-    console.log("Logout successful");
-    //return;
-  }
+  // if (e.target.id === 'signInBtn' && isLoggedIn === true) {
+  //   setUserID(null);
+  //   setLoggedIn(false);
+  //   setUsername(null);
+  //   setIsAdmin(false);
+  //   setCustomerCart([]);
+  //   console.log("Logout successful");
+  //   //return;
+  // }
 
-  if (e.target.className === 'myCartButton') {
-    if (!userID) {
-      alert('You must login to see your cart.');
-      return;
-    }
+  // if (e.target.className === 'myCartButton') {
+  //   if (!userID) {
+  //     alert('You must login to see your cart.');
+  //     return;
+  //   }
     
-    //DOUBLE CHECK THIS PATH WITH BACKEND
-    fetch('/cart/myCart')
-    .then(res => res.json())
-    .then(data => {
-      setCustomerCart(data);
-    })
-  }
+  //   //DOUBLE CHECK THIS PATH WITH BACKEND
+  //   fetch('/cart/myCart')
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     setCustomerCart(data);
+  //   })
+  // }
 
 //{ knife_id, customer_id, quantity} what I'm using for variable names
   if (e.target.className === 'addToCartButton' ){
