@@ -1,12 +1,25 @@
+@import 'Stylesheets/colors';
+
 body {
   margin: 0;
   padding: 0;
-  }
+}
 
-  #root {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+@font-face {
+  font-family: 'Okami-Outline', Arial;
+  src: url('../docs/fonts/Okami/Okami-Outline.otf')
+}
+
+#root {
+  // background-image: url(../docs/images/kanjisymbol_blade.png) ;
+  // background-position-x: center;
+  // background-position-y: 10vh;
+  // background-repeat: no-repeat;
+  // max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  color: $black;
+}
 
 .HeaderContainer {
   display: flex;
@@ -31,6 +44,9 @@ body {
 .knifeBox {
   max-width: 400px;
   max-height: 500px;
+}
+img {
+  mix-blend-mode: multiply;
 }
 
 #knivesContainerDiv {

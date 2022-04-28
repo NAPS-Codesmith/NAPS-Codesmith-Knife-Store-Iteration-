@@ -2,17 +2,6 @@ const db = require('../models/models');
 
 const cartController = {};
 
-<<<<<<< HEAD
-cartController.addToCart = (req, res, next) => {
-  console.log('req.body in addToCart: ', req.body)
-  const { userID, knife_id } = req.body
-
-  knife_id = Number(knife_id)
-  db.query('INSERT INTO cart VALUES (DEFAULT, $1, $2, $3) RETURNING *', [userID, knife_id, quantity])
-    .then((data) => {
-      // console.log('DATA:  ', data)
-      res.locals.addedItem = data.rows[0]; 
-=======
 cartController.addOneToCart = async (req, res, next) => {
   // user's session ID is stored in res.locals
   const sessionId = res.locals.sessionId;
@@ -28,28 +17,34 @@ cartController.addOneToCart = async (req, res, next) => {
 
     const quantity = await db.query(selectQueryString, [sessionId, knife_id]); //query cart_items and return quantity, if any
 
-    if (quantity) { //UPDATE if there is an existing quantity
+    if (quantity) {
+      //UPDATE if there is an existing quantity
       quantity++;
       let updateQueryString = `UPDATE cart_item
                              SET quantity
                              WHERE session_id = $1
-                               AND product_id = $2;`
-      const updateCart = await db.query(updateQueryString, [sessionId, knife_id]);
-    }
-    else {       //INSERT if this is the first cart_item
+                               AND product_id = $2;`;
+      const updateCart = await db.query(updateQueryString, [
+        sessionId,
+        knife_id,
+      ]);
+    } else {
+      //INSERT if this is the first cart_item
       quantity = 1;
       let insertQueryString = `INSERT INTO cart_item
                              VALUES (DEFAULT,$1,$2,$3,DEFAULT,DEFAULT)
                              RETURNING *`;
-      const insertCart = await db.query(insertQueryString, [sessionId, knife_id, quantity]);
-    };
+      const insertCart = await db.query(insertQueryString, [
+        sessionId,
+        knife_id,
+        quantity,
+      ]);
+    }
 
     return next();
-
   } catch (err) {
-    return next(err)
+    return next(err);
   }
-
 };
 
 cartController.removeOneFromCart = (req, res, next) => {
@@ -64,7 +59,6 @@ cartController.removeOneFromCart = (req, res, next) => {
     .then((data) => {
       console.log('DATA:  ', data);
       res.locals.addedItem = data.rows[0];
->>>>>>> main
       return next();
     })
     .catch((err) =>
@@ -76,10 +70,6 @@ cartController.removeOneFromCart = (req, res, next) => {
 };
 
 cartController.getCart = (req, res, next) => {
-<<<<<<< HEAD
-  // console.log(req.body)
-}
-=======
   // user's session ID is stored in res.locals
   const { sessionId } = res.locals;
   // console.log('sessionId of cart:', sessionId);
@@ -113,9 +103,8 @@ cartController.getCart = (req, res, next) => {
         log: 'error occured in cartController.getCart',
         status: 400,
         message: { error: error },
-      })
-    })
+      });
+    });
 };
->>>>>>> main
 
 module.exports = cartController;
