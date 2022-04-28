@@ -42,6 +42,8 @@ function handleClick(e){
   //     setCustomerCart(data);
   //   })
   // }
+  /**   ❌❌❌❌❌❌❌ THIS IS WHERE WE HANDLE CART IF THE USER ISNT LOGGED IN ❌❌❌❌❌❌❌ */
+  // if (e.target.className === '')
 
 //{ knife_id, customer_id, quantity} what I'm using for variable names
   if (e.target.className === 'addToCartButton' ){
