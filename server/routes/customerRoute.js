@@ -2,6 +2,8 @@ const express = require('express');
 const customerRouter = express.Router();
 const customerController = require('../controllers/customerController.js');
 const authController = require('../controllers/authController.js');
+const cartController = require('../controllers/cartController.js');
+
 
 
 customerRouter.get('/:username', customerController.getCustomer, (req, res) => {
@@ -12,8 +14,11 @@ customerRouter.post('/addCustomer', customerController.createCustomer, customerC
   return res.status(200).json(res.locals.authentication);
 });
 //
-customerRouter.post('/login', customerController.login, authController.createSessionId, (req, res) => {
-  return res.status(200).json(res.locals.authentication);
+customerRouter.post('/login', customerController.login, authController.createSessionId, authController.getSessionId, cartController.getCart, (req, res) => {
+  return res.status(200).json({
+    "customer":res.locals.authentication,
+    "cart":res.locals.cartItems
+  });
 });
 
 customerRouter.delete('/:id', customerController.deleteCustomer, (req, res) => {

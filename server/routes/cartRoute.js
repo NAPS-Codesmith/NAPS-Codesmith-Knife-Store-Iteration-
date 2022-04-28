@@ -10,8 +10,8 @@ cartRouter.post(
   cartController.getCart,
   (req, res) => {
     return res.status(200).json({
-      addedItem: res.locals.addedItem,
-      updatedCart: res.locals.cartItems,
+      'addedItem': res.locals.addedItem,
+      'updatedCart': res.locals.cartItems
     });
   }
 );
@@ -24,8 +24,8 @@ cartRouter.post(
   cartController.getCart,
   (req, res) => {
     return res.status(200).json({
-      removedItem: res.locals.removedItem,
-      updatedCart: res.locals.cartItems,
+      'removedItem': res.locals.removedItem,
+      'updatedCart': res.locals.cartItems
     });
   }
 );

@@ -30,7 +30,12 @@ authController.createSessionId = (req, res, next) => {
 
 authController.getSessionId = (req, res, next) => {
     // the user id should be in the request body
-    const { userId } = req.body;
+    let userId;
+    // request from addOne or removeOne
+    if (req.body.userId) userId = req.body.userId;
+    // const { userId } = req.body;
+    // request coming from login
+    else userId = res.locals.authentication.id;
     // console.log('auth userId from req body:', userId);
     // userId = Number(userId);
     // console.log('userId is', typeof userId);

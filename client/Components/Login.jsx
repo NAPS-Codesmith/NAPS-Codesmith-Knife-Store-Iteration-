@@ -21,18 +21,8 @@ function Login(props){
   // Modal refered a lot, dont know what it means
   //Modal refers to the window that opens when you click the sign in button
   function openModal() {
-    if (!props.isLoggedIn){
       setIsOpen(true); 
-    }
-    else {
-      setUserID(null);
-      setLoggedIn(false);
-      setUsername(null);
-      setIsAdmin(false);
-      setCustomerCart([]);
-      console.log("Logout successful");
-    }
-}
+  };
 
   // function afterOpenModal() {
   // }
@@ -54,10 +44,10 @@ function Login(props){
   //   const [customerCart, setCustomerCart] = useState([]);
   // }
 
-  function logout() {
-    localStorage.clear();
-    window.location.href = '/';
-}
+//   function logout() {
+//     localStorage.clear();
+//     window.location.href = '/';
+// }
 
 
 
