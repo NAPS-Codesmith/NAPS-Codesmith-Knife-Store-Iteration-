@@ -156,23 +156,19 @@ useEffect(() => console.log('userId: ', userId ,'isloggedin: ', isLoggedIn, 'use
 
   return (
     <>
-      <div>
-        <HeaderContainer 
-          handleClick = {handleClick} 
-          isLoggedIn = { isLoggedIn } 
-          isAdmin = { isAdmin } 
-          username = { username } 
-          customerCart = {customerCart}
-        />   
-      </div> 
-      <div>
-        <KnivesContainer 
-          username = {username} 
-          isLoggedIn = {isLoggedIn} 
-          isAdmin = {isAdmin} 
-          handleClick = {handleClick}
-        />
-      </div>
+    <HeaderContainer 
+      handleClick = {handleClick} 
+      isLoggedIn = { isLoggedIn } 
+      isAdmin = { isAdmin } 
+      username = { username } 
+      customerCart = {customerCart}
+    />   
+    <KnivesContainer 
+      username = {username} 
+      isLoggedIn = {isLoggedIn} 
+      isAdmin = {isAdmin} 
+      handleClick = {handleClick}
+    />
     </>
   )
 }

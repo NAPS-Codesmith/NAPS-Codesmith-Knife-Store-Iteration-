@@ -30,9 +30,14 @@ cartRouter.post(
   }
 );
 
-cartRouter.get('/myCart', authController.getSessionId, cartController.getCart, (req, res) => {
-  // return an array of objects (cart items)
-  return res.status(200).json(res.locals.cartItems)
-})
+cartRouter.get(
+  '/myCart',
+  authController.getSessionId,
+  cartController.getCart,
+  (req, res) => {
+    // return an array of objects (cart items)
+    return res.status(200).json(res.locals.cartItems);
+  }
+);
 
 module.exports = cartRouter;

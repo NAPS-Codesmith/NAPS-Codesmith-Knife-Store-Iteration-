@@ -1,0 +1,88 @@
+@import 'Stylesheets/colors';
+
+* {
+font-family: 'Roboto', sans-serif;
+font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+#root {
+  // background-image: url(../docs/images/kanjisymbol_blade.png) ;
+  // background-position-x: center;
+  // background-position-y: 10vh;
+  // background-repeat: no-repeat;
+  // max-width: 1200px;
+  width: 100vw;
+  margin: 0 auto;
+  background-color: $white;
+  color: $black;
+  
+  // flex-direction: column;
+}
+
+.HeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  background-color: $black;
+  padding: 0px 15px;
+
+  >* {
+    color: $white;
+  }
+
+}
+
+#knivesContainerDiv {
+  padding: 1em;
+  display: grid;
+  grid-template: auto / repeat(3, 1fr);
+  column-gap: 2vw;
+  row-gap: 2vw;
+}
+
+
+
+.RightContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputForm {
+  width: 500px;
+  height: 500px;
+  background-color: $white;
+  align-items: center;
+}
+
+.knifeBox {
+  max-width: 33vw;
+  // max-height: 500px;
+  border: 0;
+  // border-radius: 1em;
+  padding: 1em;
+  box-shadow: .5em .5em .5em .2em rgba(0, 0, 0, 0.103) ;
+  
+  > * {
+    margin: .5em 0;
+  }
+}
+
+img {
+  mix-blend-mode: multiply;
+  display: flex;
+}
+
+button {
+  background-color: $crimson;
+  color: white;
+  font-weight: bold;
+  border: 0;
+  padding: .5em 1em;
+  border-radius: .25em;
+}
