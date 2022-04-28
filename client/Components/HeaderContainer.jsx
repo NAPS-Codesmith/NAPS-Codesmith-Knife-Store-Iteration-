@@ -11,7 +11,7 @@ function HeaderContainer(props){
       {/* Left Container Displaying the Title of the page */}
       {/* We'd want it to be center for more professionality */}
       <div className = 'LeftContainer'>
-        <h2>Yeti Crab Knives</h2>
+        <h2>刃 Big Body Knives</h2>
       </div>
       {/* Right Container is display text "Cart" and "Sign in" */}
       <div className = 'RightContainer'>
