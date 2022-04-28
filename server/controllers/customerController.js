@@ -70,7 +70,7 @@ customerController.getCustomer = (req, res, next) => {
 customerController.login = (req, res, next) => {
   const queryStr = 'SELECT * FROM customer WHERE username = $1';
   const { user, password } = req.body;
-  // console.log('req.body:  ', req.body);
+  console.log('req.body on login:  ', req.body);
   db.query(queryStr, [user])
     .then((data) => {
       // console.log(data);

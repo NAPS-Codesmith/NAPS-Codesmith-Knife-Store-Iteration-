@@ -59,10 +59,7 @@ function Login(props){
       {/* If so displayed "Log Out" else "Sign in", very clever and short way of doing this */}
       {/* I thought it'd be much longer*/}
       <button 
-        onClick={() => {
-          openModal();
-          props.handleClick()
-        }} 
+        onClick={openModal} 
         id = 'signInBtn'>{props.isLoggedIn ? 'Log Out' : 'Sign In'}</button> 
       <Modal
         isOpen={modalIsOpen}

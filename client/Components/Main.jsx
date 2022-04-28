@@ -4,11 +4,22 @@ import HeaderContainer from './HeaderContainer.jsx';
 import KnivesContainer from './KnivesContainer.jsx';
 
 function Main() {
-  const [userID, setUserID] = useState(null);
+  const [userId, setUserID] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [customerCart, setCustomerCart] = useState([]);
+
+  /**
+   * const [userData, setUserData] = useState ({
+   * userId: null,
+   * isLoggedIn: false,
+   * username: null,
+   * isAdmin: false,
+   * customerCart: []
+   * })
+   * 
+   */
 
   /**
    * super()
@@ -17,7 +28,7 @@ function Main() {
    * }
    */
   
-function handleClick(e){
+function handleClick (e){
   //five options - addToCart, login, signUp, seeMyCart, logOut
   // if (e.target.id === 'signInBtn' && isLoggedIn === true) {
   //   setUserID(null);
@@ -29,12 +40,13 @@ function handleClick(e){
   //   //return;
   // }
 
-  // if (e.target.className === 'myCartButton') {
-  //   if (!userID) {
-  //     alert('You must login to see your cart.');
+  // if (e.target.className === 'cartBtn') {
+  //   if (!userId) {
+  //     console.log('Please login before accessing the cart');
   //     return;
   //   }
-    
+  // }
+
   //   //DOUBLE CHECK THIS PATH WITH BACKEND
   //   fetch('/cart/myCart')
   //   .then(res => res.json())
@@ -42,43 +54,44 @@ function handleClick(e){
   //     setCustomerCart(data);
   //   })
   // }
-  /**   ❌❌❌❌❌❌❌ THIS IS WHERE WE HANDLE CART IF THE USER ISNT LOGGED IN ❌❌❌❌❌❌❌ */
-  // if (e.target.className === '')
 
-//{ knife_id, customer_id, quantity} what I'm using for variable names
+
+
   if (e.target.className === 'addToCartButton' ){
-    //console.log(e.target.id) --> knife-12
-    //knife-12 --> const knife_id = 12
+
     const knife_id = e.target.id.split('-')[1];
-    console.log('userID: ', userID)
-    if (!userID) {
+    console.log(typeof knife_id);
+ 
+    if (!isLoggedIn) {
+      console.log(userId)
       alert('Please login before adding to cart.');
       return;
     }
-    // path gotta be worked on
-    // After we are in the cart path twice, then were are making fetch request?
-    fetch('/cart/addToCart', {
+
+    const bodyObject = {
+      knife_id,
+      userId
+    };
+
+    fetch(`/cart/${Number(knife_id)}/addOne`, {
       method: 'POST',
-      body: JSON.stringify({
-        knife_id,
-        userID
-    }),
-    headers: { 'Content-Type': 'application/json'},
+      headers: {
+      'Content-Type': 'Application/JSON'
+      },
+      body: JSON.stringify(bodyObject)
     })
     .then(res => res.json())
-    .then(data => 
-      /*RETURN BACK TO THIS WHEN BACKEND FOR ADDTOCART IS FINISHED */
-      // access name property, store as const
-        //const nameOfKnife = data.product_name;
-        //alert(`You've successfully added ${nameOfKnife} to your cart!`);
-      console.log('add to cart: ', data),
+    .then(data => {
+      console.log('add to cart: ', data['updatedCart']);
+      setCustomerCart(data['updatedCart'])
+      alert('Item successfully added to cart.')
+      }
     )
     .catch(err => console.log('error adding knife:', err));
   
 }
 
   if (e.target.id === 'loginButton'){
-    console.log(document.querySelector('#usernameInput'))
     const user = document.querySelector('#usernameInput').value;
     const password = document.querySelector('#passwordInput').value;
 
@@ -89,28 +102,29 @@ function handleClick(e){
     })
     .then(res => res.json())
     .then(data => {
-      // console.log(typeof data.username);
-      if (data.username) {
-        setUserID(data.id)
+      console.log('data', data);
+      if (data.customer.username) {
+        setUserID(data.customer.id);
         setLoggedIn(true);
-        setUsername(data.username);
-        setIsAdmin(data.isAdmin);
+        setUsername(data.customer.username);
+        setIsAdmin(data.customer.isAdmin);
+        setCustomerCart(data.cart);
       }
       else {
         setUserID(null);
         setLoggedIn(false);
         setUsername(null);
         setIsAdmin(false);
+        setCustomerCart([]);
       }
     })
-    // .then(() => console.log('isloggedin: ', isLoggedIn, 'username:  ', username, 'isAdmin: ', isAdmin))
     .catch(err => console.log('error in fetch request', err));
   }
-
 
   if (e.target.id === 'signUpButton'){
     const user = document.querySelector('#usernameInput').value;
     const password = document.querySelector('#passwordInput').value;
+
     fetch(`/customers/addCustomer`, {
       method: 'POST',
       body: JSON.stringify({user, password}),
@@ -118,30 +132,30 @@ function handleClick(e){
     })
     .then(res => res.json())
     .then(data => {
-      if (data.username) {
-        setUserID(data.id)
+      if (data.customer.username) {
+        setUserID(data.customer.id);
         setLoggedIn(true);
-        setUsername(data.username);
-        setIsAdmin(data.isAdmin);
+        setUsername(data.customer.username);
+        setIsAdmin(data.customer.isAdmin);
+        setCustomerCart(data.cart);
       }
       else {
         setUserID(null);
         setLoggedIn(false);
         setUsername(null);
         setIsAdmin(false);
+        setCustomerCart([]);
       }
     })
     .catch(err => console.log('error in fetch request', err));
   }
 }
 
-useEffect(() => {console.log('userID: ', userID ,'isloggedin: ', isLoggedIn, 'username:  ', username, 'isAdmin: ', isAdmin)});
+useEffect(() => console.log('userId: ', userId ,'isloggedin: ', isLoggedIn, 'username:  ', username, 'isAdmin: ', isAdmin));
 
 
   return (
     <>
-
-
       <div>
         <HeaderContainer 
           handleClick = {handleClick} 

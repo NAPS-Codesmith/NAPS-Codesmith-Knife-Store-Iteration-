@@ -13,11 +13,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-  app.use('/', express.static(path.join(__dirname, '../build')));
+app.use('/', express.static(path.join(__dirname, '../build')));
 
-  app.get('/', (req, res) =>
-    res.status(200).sendFile(path.join(__dirname, '../build/index.html'))
-  );
+app.get('/', (req, res) =>
+  res.status(200).sendFile(path.join(__dirname, '../build/index.html'))
+);
 
 // app.post('/api', (req, res) => {
 //   res.status(200).json({isLogged=In: true})
@@ -45,7 +45,7 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () =>{
+app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
 
