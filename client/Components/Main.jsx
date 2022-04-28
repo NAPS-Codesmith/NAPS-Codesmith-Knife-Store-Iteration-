@@ -56,6 +56,35 @@ function handleClick (e){
   // }
 
 
+  if (e.target.className === 'removeOne' || e.target.className === 'addOne') {
+    
+    const knife_id = e.target.id.split('-')[1];
+    console.log('knife_id', knife_id);
+
+    const action = e.target.className;
+
+    const bodyObject = {
+      knife_id,
+      userId
+    };
+
+    fetch(`/cart/${Number(knife_id)}/${action}`, {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'Application/JSON'
+      },
+      body: JSON.stringify(bodyObject)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('add to cart: ', data['updatedCart']);
+      setCustomerCart(data['updatedCart'])
+      }
+    )
+    .catch(err => console.log('error adding knife:', err));
+  }
+
+
 
   if (e.target.className === 'addToCartButton' ){
 

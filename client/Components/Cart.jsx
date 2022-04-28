@@ -44,19 +44,20 @@ const arr = [];
 let totalPrice = 0;
 
   for (let i = 0; i < customerCart.length; i++) {
-    totalPrice += Number(customerCart[i].price) * customerCart[i].quantity;
+    let knife = customerCart[i];
+    totalPrice += Number(knife.price) * knife.quantity;
     arr.push(
       <tr key={`item${i}`}>
-        <th><img className='cart_img' height= '120' width= '120' src={customerCart[i].img_url} /></th>
-        <th>{customerCart[i].name}</th>
+        <th><img className='cart_img' height='120' width='120' src={knife.img_url} /></th>
+        <th>{knife.name}</th>
         <th>
           <div>
-            <button> - </button>
-          <span> {customerCart[i].quantity} </span>
-          <button> + </button>
+            <button className='removeOne' id={`add-${knife.product_id}`} onClick={handleClick}> - </button>
+          <span> {knife.quantity} </span>
+            <button className='addOne' id={`delete-${knife.product_id}`}onClick={handleClick}> + </button>
           </div>
           </th>
-        <th>${customerCart[i].price}</th>
+        <th>${knife.price}</th>
       </tr>
     )
   }
