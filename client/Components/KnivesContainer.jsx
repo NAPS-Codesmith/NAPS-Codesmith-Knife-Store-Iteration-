@@ -44,13 +44,8 @@ function KnivesContainer(props){
 
   return (
     <div id='knivesContainerDiv'>
-      {/* Getting really confused with the whole Admin stuff, it gets passed around in every single component */}
-      <div>
       <AdminAddKnife isAdmin = {props.isAdmin}/>
-      <h2>List of Knives</h2>
-      </div>
-      {/* This is where each item with the correct Price/Img and etc gets prop drilled to Knife.jsx to be displayed */}
-        {knivesToRender}
+      {knivesToRender}
     </div>
   )
 }

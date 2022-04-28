@@ -32,7 +32,7 @@ const Knife = props => {
       // Each Knife component/box where knife is displayed
       <div className="knifeBox">
           {/* Rest should speak for itself */}
-        <div><img src={props.img} height='300' width='300'/></div>
+        <img src={props.img} height='300' width='300'/>
         <div>{props.name}</div>
         <div>Length: {props.length}mm</div>
         <div>Steel: {props.steel_type}</div>
