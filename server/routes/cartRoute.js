@@ -10,8 +10,8 @@ cartRouter.post(
   cartController.getCart,
   (req, res) => {
     return res.status(200).json({
-      'addedItem': res.locals.addedItem,
-      'updatedCart:': res.locals.cartItems
+      addedItem: res.locals.addedItem,
+      updatedCart: res.locals.cartItems,
     });
   }
 );
@@ -24,15 +24,20 @@ cartRouter.post(
   cartController.getCart,
   (req, res) => {
     return res.status(200).json({
-      'removedItem': res.locals.removedItem,
-      'updatedCart:': res.locals.cartItems
+      removedItem: res.locals.removedItem,
+      updatedCart: res.locals.cartItems,
     });
   }
 );
 
-cartRouter.get('/myCart', authController.getSessionId, cartController.getCart, (req, res) => {
-  // return an array of objects (cart items)
-  return res.status(200).json(res.locals.cartItems)
-})
+cartRouter.get(
+  '/myCart',
+  authController.getSessionId,
+  cartController.getCart,
+  (req, res) => {
+    // return an array of objects (cart items)
+    return res.status(200).json(res.locals.cartItems);
+  }
+);
 
 module.exports = cartRouter;

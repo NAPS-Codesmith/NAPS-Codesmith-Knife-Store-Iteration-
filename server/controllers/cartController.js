@@ -20,43 +20,55 @@ cartController.addOneToCart = async (req, res, next) => {
                             WHERE session_id = $1 
                               AND product_id = $2;`;
     // console.log('sessionId, knife_id', sessionId, knife_id);
-    const dataObjToUpdate = await db.query(selectQueryString, [sessionId, knife_id]); //query cart_items and return the cart_item, if any
+    const dataObjToUpdate = await db.query(selectQueryString, [
+      sessionId,
+      knife_id,
+    ]); //query cart_items and return the cart_item, if any
     // console.log('dataObjToUpdate', dataObjToUpdate);
     const dataItemToUpdate = dataObjToUpdate.rows[0];
     // console.log('dataItemToUpdate', dataItemToUpdate);
     let updatedCartItem, quantity;
 
-    if (dataItemToUpdate === undefined) { quantity = undefined } else {
+    if (dataItemToUpdate === undefined) {
+      quantity = undefined;
+    } else {
       quantity = dataItemToUpdate.quantity;
     }
 
-    if (quantity || quantity === 0) { //UPDATE if there is an existing quantity
+    if (quantity || quantity === 0) {
+      //UPDATE if there is an existing quantity
       quantity++;
       let updateQueryString = `UPDATE cart_item
                              SET quantity = $1
                              WHERE session_id = $2
-                               AND product_id = $3 RETURNING *;`
-      const updateCart = await db.query(updateQueryString, [quantity, sessionId, knife_id]);
+                               AND product_id = $3 RETURNING *;`;
+      const updateCart = await db.query(updateQueryString, [
+        quantity,
+        sessionId,
+        knife_id,
+      ]);
       updatedCartItem = updateCart.rows[0];
-    }
-    else {       //INSERT if this is the first cart_item
+    } else {
+      //INSERT if this is the first cart_item
       quantity = 1;
       let insertQueryString = `INSERT INTO cart_item
                              VALUES (DEFAULT,$1,$2,$3,DEFAULT,DEFAULT)
                              RETURNING *`;
-      const insertCart = await db.query(insertQueryString, [sessionId, knife_id, quantity]);
+      const insertCart = await db.query(insertQueryString, [
+        sessionId,
+        knife_id,
+        quantity,
+      ]);
       updatedCartItem = insertCart.rows[0];
-    };
+    }
     res.locals.addedItem = updatedCartItem;
     return next();
-
   } catch (err) {
     return next({
       log: 'error occured in cartController.addOneToCart',
-      message: { err: err }
-    })
+      message: { err: err },
+    });
   }
-
 };
 
 cartController.removeOneFromCart = async (req, res, next) => {
@@ -72,57 +84,65 @@ cartController.removeOneFromCart = async (req, res, next) => {
     WHERE session_id = $1 
       AND product_id = $2;`;
 
-    const dataObjToRemove = await db.query(selectQueryString, [sessionId, knife_id]); //query cart_items and return the cart_item, if any
+    const dataObjToRemove = await db.query(selectQueryString, [
+      sessionId,
+      knife_id,
+    ]); //query cart_items and return the cart_item, if any
     const dataItemToRemove = dataObjToRemove.rows[0];
-    let dataItemRemoved = {}, updateCart, quantity;
+    let dataItemRemoved = {},
+      updateCart,
+      quantity;
     // console.log('dataItemToRemove:', dataItemToRemove);
 
-    if (dataItemToRemove === undefined) { quantity = undefined } else {
+    if (dataItemToRemove === undefined) {
+      quantity = undefined;
+    } else {
       quantity = dataItemToRemove.quantity;
     }
 
     // console.log('quantity type and value', typeof quantity, quantity);
 
-
-    if (quantity || quantity === 0) { //UPDATE or DELETE if there is an existing quantity
+    if (quantity || quantity === 0) {
+      //UPDATE or DELETE if there is an existing quantity
       if (quantity > 0) {
         quantity--;
       } else {
         quantity = 0;
-      };
+      }
 
       console.log('quantity: ', quantity);
-      if (quantity === 0) { //DELETE ROW if after decrement, quantity === 0
+      if (quantity === 0) {
+        //DELETE ROW if after decrement, quantity === 0
         let removeQueryString = `DELETE FROM cart_item
         WHERE session_id = $1
-        AND product_id = $2 RETURNING *;`
+        AND product_id = $2 RETURNING *;`;
         updateCart = await db.query(removeQueryString, [sessionId, knife_id]); //THIS RETURNS THE REMOVED ROW
         // console.log(updateCart.rows[0], 'REMOVED ITEM');
-        dataItemRemoved = updateCart.rows[0]
-      } else { //UPDATE ROW if after decrement, quantity !== 0
+        dataItemRemoved = updateCart.rows[0];
+      } else {
+        //UPDATE ROW if after decrement, quantity !== 0
         let removeQueryString = `UPDATE cart_item
         SET quantity = $1
         WHERE session_id = $2
-          AND product_id = $3 RETURNING *;`
-        updateCart = await db.query(removeQueryString, [quantity, sessionId, knife_id]); //THIS RETURNS THE UPDATED ROW
+          AND product_id = $3 RETURNING *;`;
+        updateCart = await db.query(removeQueryString, [
+          quantity,
+          sessionId,
+          knife_id,
+        ]); //THIS RETURNS THE UPDATED ROW
         // console.log(updateCart.rows[0], 'UPDATED ITEM');
-        dataItemRemoved = dataItemToRemove //We don't use updateCart here as we want to return the item BEFORE the update
+        dataItemRemoved = dataItemToRemove; //We don't use updateCart here as we want to return the item BEFORE the update
       }
-
-      ;
     }
 
     res.locals.removedItem = dataItemRemoved;
     return next();
-
   } catch (err) {
     return next({
       log: 'error occured in cartController.removeOneFromCart',
-      message: { err: err }
-    })
-
+      message: { err: err },
+    });
   }
-
 };
 
 cartController.getCart = (req, res, next) => {
@@ -159,8 +179,8 @@ cartController.getCart = (req, res, next) => {
         log: 'error occured in cartController.getCart',
         status: 400,
         message: { error: error },
-      })
-    })
+      });
+    });
 };
 
 module.exports = cartController;
