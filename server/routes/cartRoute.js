@@ -7,8 +7,12 @@ cartRouter.post(
   '/:knife_id/addOne',
   authController.getSessionId,
   cartController.addOneToCart,
+  cartController.getCart,
   (req, res) => {
-    return res.status(200).json(res.locals.addedItem);
+    return res.status(200).json({
+      'addedItem': res.locals.addedItem,
+      'updatedCart:': res.locals.cartItems
+    });
   }
 );
 
@@ -17,8 +21,12 @@ cartRouter.post(
   '/:knife_id/removeOne',
   authController.getSessionId,
   cartController.removeOneFromCart,
+  cartController.getCart,
   (req, res) => {
-    return res.status(200).json(res.locals.removedItem);
+    return res.status(200).json({
+      'removedItem': res.locals.removedItem,
+      'updatedCart:': res.locals.cartItems
+    });
   }
 );
 
