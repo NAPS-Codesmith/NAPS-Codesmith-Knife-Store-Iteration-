@@ -37,7 +37,7 @@ knifeController.deleteKnife = (req, res, next) => {
   const { id } = req.params;
   db.query('DELETE FROM knives WHERE id = $1 RETURNING *', [id])
   .then((data) => {
-    console.log(data);
+    // console.log(data);
     res.locals.deletedKnife = data.rows; 
     return next();
   })

@@ -3,12 +3,14 @@ const db = require('../models/models');
 const customerController = {};
 
 customerController.createCustomer = (req, res, next) => {
-  const { user, password } = req.body;
+  // console.log('req.body for signup:', req.body)
+  const { user, password } = req.body
   let isAdmin = false
   
   db.query('INSERT INTO customer VALUES (DEFAULT, $1, $2, $3) RETURNING *', [user, password, isAdmin])
     .then((data) => {
-      res.locals.addedCustomer = data.rows; 
+      console.log('data❌❌❌❌❌:', data.rows[0])
+      res.locals.addedCustomer = data.rows[0]; 
       return next();
     })
     .catch((err) => 
@@ -72,6 +74,7 @@ customerController.login = (req, res, next) => {
   // console.log('req.body:  ', req.body);
   db.query(queryStr, [user])
     .then((data) => {
+      // console.log(data);
       if (password !== data.rows[0].password) {
         res.locals.authentication = {
           username: null,

@@ -8,9 +8,40 @@ function Main() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [customerCart, setCustomerCart] = useState([]);
+
+  /**
+   * super()
+   *  this.state = {
+   *    userId: null;
+   * }
+   */
   
 function handleClick(e){
-  //three options - addToCart, login, signUp
+  //five options - addToCart, login, signUp, seeMyCart, logOut
+  if (e.target.id === 'signInBtn' && isLoggedIn === true) {
+    setUserID(null);
+    setLoggedIn(false);
+    setUsername(null);
+    setIsAdmin(false);
+    setCustomerCart([]);
+    console.log("Logout successful");
+    //return;
+  }
+
+  if (e.target.className === 'myCartButton') {
+    if (!userID) {
+      alert('You must login to see your cart.');
+      return;
+    }
+    
+    //DOUBLE CHECK THIS PATH WITH BACKEND
+    fetch('/cart/myCart')
+    .then(res => res.json())
+    .then(data => {
+      setCustomerCart(data);
+    })
+  }
 
 //{ knife_id, customer_id, quantity} what I'm using for variable names
   if (e.target.className === 'addToCartButton' ){
@@ -28,14 +59,16 @@ function handleClick(e){
       method: 'POST',
       body: JSON.stringify({
         knife_id,
-        userID,
-        quantity: 1,
+        userID
     }),
     headers: { 'Content-Type': 'application/json'},
     })
     .then(res => res.json())
-    .then(data =>
-      // Not quite necessary
+    .then(data => 
+      /*RETURN BACK TO THIS WHEN BACKEND FOR ADDTOCART IS FINISHED */
+      // access name property, store as const
+        //const nameOfKnife = data.product_name;
+        //alert(`You've successfully added ${nameOfKnife} to your cart!`);
       console.log('add to cart: ', data),
     )
     .catch(err => console.log('error adding knife:', err));
@@ -101,14 +134,28 @@ function handleClick(e){
 }
 
 useEffect(() => {console.log('userID: ', userID ,'isloggedin: ', isLoggedIn, 'username:  ', username, 'isAdmin: ', isAdmin)});
+
+
   return (
     <>
-      <div>
-      <HeaderContainer handleClick = {handleClick} isLoggedIn = { isLoggedIn } isAdmin = { isAdmin } username = { username }/>   
 
+
+      <div>
+        <HeaderContainer 
+          handleClick = {handleClick} 
+          isLoggedIn = { isLoggedIn } 
+          isAdmin = { isAdmin } 
+          username = { username } 
+          customerCart = {customerCart}
+        />   
       </div> 
       <div>
-        <KnivesContainer username = {username} isLoggedIn = {isLoggedIn} isAdmin = {isAdmin} handleClick = {handleClick}/>
+        <KnivesContainer 
+          username = {username} 
+          isLoggedIn = {isLoggedIn} 
+          isAdmin = {isAdmin} 
+          handleClick = {handleClick}
+        />
       </div>
     </>
   )

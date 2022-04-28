@@ -20,10 +20,19 @@ function Login(props){
 
   // Modal refered a lot, dont know what it means
   //Modal refers to the window that opens when you click the sign in button
-
   function openModal() {
-    setIsOpen(true);
-  }
+    if (!props.isLoggedIn){
+      setIsOpen(true); 
+    }
+    else {
+      setUserID(null);
+      setLoggedIn(false);
+      setUsername(null);
+      setIsAdmin(false);
+      setCustomerCart([]);
+      console.log("Logout successful");
+    }
+}
 
   // function afterOpenModal() {
   // }
@@ -37,15 +46,31 @@ function Login(props){
     closeModal();
 }, [props.isLoggedIn])
 
+  // const logOut = function () {
+  //   const [userID, setUserID] = useState(null);
+  //   const [isLoggedIn, setLoggedIn] = useState(false);
+  //   const [username, setUsername] = useState(null);
+  //   const [isAdmin, setIsAdmin] = useState(false);
+  //   const [customerCart, setCustomerCart] = useState([]);
+  // }
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = '/';
+}
+
+
 
   return (
-    //ADD: if props.isLoggedIn is true call closeModal 
+    //ADD: if props.isLoggedIn is true call closeModal
     
     <div>
       {/* Checking if the user is currently signed in */}
       {/* If so displayed "Log Out" else "Sign in", very clever and short way of doing this */}
       {/* I thought it'd be much longer*/}
-      <button onClick={openModal} className = 'signInBtn'>{props.isLoggedIn ? 'Log Out' : 'Sign In'}</button> 
+      <button 
+        onClick={openModal} 
+        id = 'signInBtn'>{props.isLoggedIn ? 'Log Out' : 'Sign In'}</button> 
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -67,4 +92,4 @@ function Login(props){
   );
 }
 
-export default Login
+export default Login;
