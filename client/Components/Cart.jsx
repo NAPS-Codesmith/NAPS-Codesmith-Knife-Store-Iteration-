@@ -47,9 +47,15 @@ let totalPrice = 0;
     totalPrice += Number(customerCart[i].price) * customerCart[i].quantity;
     arr.push(
       <tr key={`item${i}`}>
-        <th><img className='cart_img' height= '99' width= '99' src={customerCart[i].img_url} /></th>
+        <th><img className='cart_img' height= '120' width= '120' src={customerCart[i].img_url} /></th>
         <th>{customerCart[i].name}</th>
-        <th>{customerCart[i].quantity}</th>
+        <th>
+          <div>
+            <button> - </button>
+          <span> {customerCart[i].quantity} </span>
+          <button> + </button>
+          </div>
+          </th>
         <th>${customerCart[i].price}</th>
       </tr>
     )

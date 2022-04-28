@@ -2,7 +2,12 @@
 
 * {
 font-family: 'Roboto', sans-serif;
-font-size: 16px;
+font-size: 14px;
+}
+
+h2 {
+  font-size: 200%;
+  margin: 0
 }
 
 body {
@@ -29,7 +34,7 @@ body {
   display: flex;
   justify-content: space-between;
   background-color: $black;
-  padding: 0px 15px;
+  padding: 2vh 1em;
 
   >* {
     color: $white;
@@ -38,19 +43,31 @@ body {
 }
 
 #knivesContainerDiv {
-  padding: 1em;
+  padding: 2em;
   display: grid;
-  grid-template: auto / repeat(3, 1fr);
-  column-gap: 2vw;
-  row-gap: 2vw;
+  // grid-template: auto / fit-content;
+  // grid-template: auto / repeat(5, 1fr);
+  grid-template: auto / repeat(4,auto);
+  grid-auto-flow: row;
+  column-gap: 2vh;
+  row-gap: 1.5vw;
+  
 }
 
 
+
+// #knivesContainerDiv {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 2.5em;
+  
+// }
 
 .RightContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1em
 }
 
 .inputForm {
@@ -61,7 +78,7 @@ body {
 }
 
 .knifeBox {
-  max-width: 33vw;
+  max-width: 30vw;
   // max-height: 500px;
   border: 0;
   // border-radius: 1em;
@@ -73,9 +90,11 @@ body {
   }
 }
 
-img {
+#knivesContainerDiv img {
   mix-blend-mode: multiply;
   display: flex;
+  // height: 20vh;
+  width: auto
 }
 
 button {
@@ -85,4 +104,24 @@ button {
   border: 0;
   padding: .5em 1em;
   border-radius: .25em;
+
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #f56991;
+  
+}
+
+table th {
+  padding: 25px;
+  // margin: 50px;
+}
+
+table tr {
+  margin: 10px;
+}
+
+table {
+  // text-decoration: none;
 }
