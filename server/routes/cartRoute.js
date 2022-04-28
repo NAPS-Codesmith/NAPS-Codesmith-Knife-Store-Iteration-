@@ -4,7 +4,7 @@ const cartController = require('../controllers/cartController.js');
 const authController = require('../controllers/authController.js');
 
 cartRouter.post(
-  '/:productId/addOne',
+  '/:knife_id/addOne',
   authController.getSessionId,
   cartController.addOneToCart,
   (req, res) => {
@@ -14,7 +14,7 @@ cartRouter.post(
 
 // remove product (one) from cart
 cartRouter.post(
-  '/:productId/removeOne',
+  '/:knife_id/removeOne',
   authController.getSessionId,
   cartController.removeOneFromCart,
   (req, res) => {
