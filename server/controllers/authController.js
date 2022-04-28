@@ -22,7 +22,7 @@ authController.createSessionId = (req, res, next) => {
         .then(() => next())
         .catch(err => {
             return next({
-                log: 'authController.getSessionId',
+                log: 'authController.createSessionId',
                 message: { err: err }
             })
         })
@@ -31,17 +31,20 @@ authController.createSessionId = (req, res, next) => {
 authController.getSessionId = (req, res, next) => {
     // the user id should be in the request body
     const { userId } = req.body;
+    // console.log('auth userId from req body:', userId);
+    // userId = Number(userId);
+    // console.log('userId is', typeof userId);
     // query the customer table to get the corresponding row from the shopping_session table
-    let queryString = `
-        SELECT shopping_session.id AS session_id 
+    let queryString = `SELECT shopping_session.id AS session_id 
         FROM customer JOIN shopping_session ON customer.id = shopping_session.customer_id 
         WHERE customer.id = $1;`;
     db.query(queryString, [userId])
         .then(data => {
             sessionObject = data.rows[0];
-            console.log(sessionObject);
+            // console.log('sessionObject:', sessionObject);
             // save that shopping session into res.locals for next middleware
-            res.locals.sessionId = sessionObject._id;
+            res.locals.sessionId = sessionObject.session_id;
+            // console.log(`${res.locals.sessionId} saved into res.locals`);
             return next();
         })
         .catch((err) =>
